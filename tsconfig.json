@@ -1,0 +1,11 @@
+{
+    "$schema": "https://raw.githubusercontent.com/TypeScriptToLua/vscode-typescript-to-lua/master/tsconfig-schema.json",
+    "compilerOptions": {
+        "types": ["../typescript-to-lua/language-extensions"],
+        "lib": ["ESNext"],
+        "outDir": "build/"
+    },
+    "tstl": {
+        "luaTarget": "5.3"
+    }
+}
