@@ -1,11 +1,90 @@
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+}
+export class Vec3 {
+    public x: number;
+    public y: number;
+    public z: number;
+    constructor(x: number, y: number, z: number) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+    public negate() : Vec3 {
+        let x = -this.x;
+        let y = -this.y;
+        let z = -this.z;
+        return new Vec3(x, y, z);
+    }
+    public multVec(other: Vec3) : Vec3 {
+        let x = other.x * this.x;
+        let y = other.y * this.y;
+        let z = other.z * this.z;
+        return new Vec3(x, y, z);
+    }
+    public add(other: Vec3) : Vec3 {
+        let x = other.x + this.x;
+        let y = other.y + this.y;
+        let z = other.z + this.z;
+        return new Vec3(x, y, z);
+    }
+    public mult(other: number) : Vec3 {
+        let x = this.x * other;
+        let y = this.y * other;
+        let z = this.z * other;
+        return new Vec3(x, y, z);
+
+    }
+    public div(other: number) : Vec3 {
+        let x = this.x / other;
+        let y = this.y / other;
+        let z = this.z / other;
+        return new Vec3(x, y, z);
+    }
+    public minus(other: Vec3) : Vec3 {
+        let x = this.x - other.x;
+        let y = this.y - other.y;
+        let z = this.z - other.z;
+        return new Vec3(x, y, z);
+    } 
+    public max(other: Vec3) : Vec3 {
+        let otherSum = other.x + other.y + other.z;
+        let thisSum = this.x + this.y + this.z;
+        if (otherSum > thisSum) {
+            return other;
+        } else {
+            return this;
+        }
+    }
+    public mag() : number {
+        return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
+    }
+    public dot(other: Vec3) : number {
+        return (this.x * other.x) + (this.y * other.y) + (this.z * other.z);
+    }
+    public normalize() : void {
+        let m = this.mag();
+        if (m > 0) {
+            let self = this.div(m);
+            this.x = self.x;
+            this.y = self.y;
+            this.z = self.z;
+        }
+    }
+    public normalized() : Vec3 {
+        let self = new Vec3(this.x, this.y, this.z);
+        self.normalize();
+        return self;
+    }
+}
 export class Color {
     public red: number;
     public green: number;
     public blue: number;
     constructor(red: number, green: number, blue: number) {
-        this.red = red;
-        this.green = green;
-        this.blue = blue;
+        this.red = Math.min(Math.max(red, 0), 255);
+        this.green = Math.min(Math.max(green, 0), 255);
+        this.blue = Math.min(Math.max(blue, 0), 255);
     }
     public toHex(): number {
         return (Math.floor(this.blue) + (256 * Math.floor(this.green)) + (256 * 256 * Math.floor(this.red)));
@@ -16,8 +95,11 @@ export class Color {
         let green = number % 256;
         return new Color(red, green, blue);
     }
-    public clone() : Color {
+    public clone(): Color {
         return new Color(this.red, this.green, this.blue);
+    }
+    public static random(): Color {
+        return new Color(getRandomInt(255), getRandomInt(255), getRandomInt(255));
     }
 }
 
